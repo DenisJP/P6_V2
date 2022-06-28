@@ -10,8 +10,8 @@ exports.addsauces = (req, res, next) => {
         ...currentSauce,
         likes: 0,
         dislikes: 0,
-        usersLiked: '',
-        usersDisliked: '',
+        usersLiked: [],
+        usersDisliked: [],
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     })
     sauce.save((err, sauce) => {
@@ -115,14 +115,16 @@ exports.likesauces = (req, res, next) => {
         }
     
         let i = 0;
-        let tabLikes = []; let tabDislikes = [];
-        let already_liked = 0; let already_disliked = 0;
+        let tabLikes = []; 
+        let tabDislikes = [];
+        let already_liked = 0; 
+        let already_disliked = 0;
         let type_like = req.body.like;
         let user_id = req.body.userId;
         console.log(typeof sauce.usersLiked)
         console.log(sauce.usersLiked)
         if(sauce.usersLiked) {
-            tabLikes = JSON.parse(sauce.usersLiked);
+            tabLikes = sauce.usersLiked;
             console.log(tabLikes)
             while(i < tabLikes.length) {
                 if(tabLikes[i] == user_id) { 
@@ -136,7 +138,8 @@ exports.likesauces = (req, res, next) => {
             }
         }
         if(sauce.usersDisliked) {
-            tabDislikes = JSON.parse(sauce.usersDisliked); i = 0;
+            tabDislikes = sauce.usersDisliked; 
+            i = 0;
             console.log(tabDislikes)
             while(i < tabDislikes.length) {
                 if(tabDislikes[i] == user_id) { 
@@ -149,7 +152,7 @@ exports.likesauces = (req, res, next) => {
                 i ++;
             }
         }
-
+// Faire un statement avec l'user id si il est présent ou non dans le tableau
         if(type_like == 1 && already_liked == 0) {
             tabLikes.push(user_id);
             sauce.likes ++; 
@@ -162,8 +165,8 @@ exports.likesauces = (req, res, next) => {
         Sauce.updateOne({ _id: req.params.id }, {
                 likes: sauce.likes, 
                 dislikes: sauce.dislikes, 
-                usersLiked: JSON.stringify(tabLikes), 
-                usersDisliked: JSON.stringify(tabDislikes)
+                usersLiked: tabLikes, 
+                usersDisliked: tabDislikes
         }).exec((err, sauce) => {
             if (err) {
                 res.status(500).send({ message: err })

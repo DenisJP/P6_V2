@@ -11,8 +11,8 @@ const Sauce = mongoose.model(
         heat: { type: Number, required: true },
         likes: { type: Number, required: false },
         dislikes: { type: Number, required: false },
-        usersLiked: [{ type: String, required: false }],
-        usersDisliked: [{ type: String, required: false }]
+        usersLiked: { type: [String], required: false },
+        usersDisliked: { type: [String], required: false }
     })
 )
 module.exports = Sauce
