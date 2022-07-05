@@ -154,12 +154,18 @@ exports.likesauces = (req, res, next) => {
         }
 // Faire un statement avec l'user id si il est présent ou non dans le tableau
         if(type_like == 1 && already_liked == 0) {
-            tabLikes.push(user_id);
-            sauce.likes ++; 
+            if(tabLikes[i]!= user_id){
+                tabLikes.push(user_id);
+                sauce.likes ++; 
+            }
+            
         }
         if(type_like == -1 && already_disliked == 0) {
-            tabDislikes.push(user_id);
-            sauce.dislikes ++; 
+            if(tabDislikes[i] != user_id){
+                tabDislikes.push(user_id);
+                sauce.dislikes ++; 
+            }
+           
         }
 
         Sauce.updateOne({ _id: req.params.id }, {
