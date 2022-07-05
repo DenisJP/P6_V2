@@ -1,3 +1,7 @@
+
+//Utilisé pendant la première soutenance, corrigé par plugin mongoose
+
+
 /*const db = require("../models")
 const User = db.user
 duplicateEmailChecker = (req, res, next) => {

@@ -152,7 +152,7 @@ exports.likesauces = (req, res, next) => {
                 i ++;
             }
         }
-// Faire un statement avec l'user id si il est présent ou non dans le tableau
+// correctif fait ici
         if(type_like == 1 && already_liked == 0) {
             if(tabLikes[i]!= user_id){
                 tabLikes.push(user_id);
